@@ -84,3 +84,4 @@ D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.pdb
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.UpdateProductAndTransactionModels.resources
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.csproj.GenerateResource.cache
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.UpdateProductAndTransactionModels2.resources
+D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.addProductCode.resources

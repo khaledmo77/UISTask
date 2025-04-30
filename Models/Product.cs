@@ -9,6 +9,8 @@ namespace TaskUIS.Models
 	public class Product
 	{
 		public int Id { get; set; }
+        [Required, StringLength(20)]
+        public string ProductCode { get; set; }
         [Required]
         [StringLength(100)]
         public string Name { get; set; }

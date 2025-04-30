@@ -24,10 +24,10 @@ namespace TaskUIS.Models
         [Required]
         [Range(0, double.MaxValue)]
         public decimal TotalPrice { get; set; }
-
+        
         [Required]
         [StringLength(50)]
-        public string Unit { get; set; }
+		public string Unit { get; set; }
 
     }
 }
