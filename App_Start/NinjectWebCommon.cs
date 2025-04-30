@@ -6,8 +6,7 @@ using System.Web.Mvc;
 using TaskUIS.Contract;
 using TaskUIS.Repository;
 using TaskUIS.Services;
-using TaskUIS.Repository;  
-using TaskUIS.Services;
+
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(YourAppNamespace.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(YourAppNamespace.App_Start.NinjectWebCommon), "Stop")]

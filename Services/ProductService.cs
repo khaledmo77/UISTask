@@ -9,9 +9,10 @@ using TaskUIS.Repository;
 
 namespace TaskUIS.Services
 {
-	public class ProductService
-	{
+	public class ProductService : IProductService
+    {
         private readonly IProductRepository _IproductRepository;
+	
         public ProductService(IProductRepository IproductRepository)
         {
             _IproductRepository = IproductRepository;

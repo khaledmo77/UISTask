@@ -4,12 +4,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using TaskUIS.Contract;
 using TaskUIS.Data;
 using TaskUIS.Models;
 
 namespace TaskUIS.Repository
 {
-	public class TransactionRepository
+	public class TransactionRepository:ITransactionRepository
 	{
         private readonly ApplicationContext _context;
         public TransactionRepository(ApplicationContext context)

@@ -8,8 +8,8 @@ using TaskUIS.Repository;
 using System.Threading.Tasks;
 namespace TaskUIS.Services
 {
-	public class TransactionService
-	{
+	public class TransactionService : ITransactionService
+    {
         private readonly ITransactionRepository _ItransactionRepository;
         public TransactionService(ITransactionRepository ItransactionRepository)
         {

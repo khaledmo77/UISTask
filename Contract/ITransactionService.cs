@@ -10,7 +10,8 @@ namespace TaskUIS.Contract
    public interface ITransactionService
     {
         Task AddTransactionAsync(Transaction transaction);
-        Task<IEnumerable<Transaction>> GetTransactionsAsync(DateTime? startDate, DateTime? endDate);
+        Task<IEnumerable<Transaction>> GetAllTransactionsAsync(DateTime? startDate, DateTime? endDate);
         Task<Transaction> GetTransactionByIdAsync(int transactionId);
+
     }
 }

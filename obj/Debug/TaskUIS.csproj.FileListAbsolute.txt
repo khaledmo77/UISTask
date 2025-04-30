@@ -85,3 +85,12 @@ D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.UpdateProductAndTransac
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.csproj.GenerateResource.cache
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.UpdateProductAndTransactionModels2.resources
 D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.addProductCode.resources
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.dll
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.dll
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.WebHost.dll
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Mvc.dll
+D:\Task UIS\TaskUIS\TaskUIS\bin\WebActivatorEx.dll
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.xml
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.xml
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.WebHost.xml
+D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Mvc.xml
