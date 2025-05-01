@@ -1,12 +1,7 @@
-﻿
+﻿@model IEnumerable<TaskUIS.Models.Product>
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-
-
 
 <div class="container">
     <h1>Products</h1>
@@ -18,102 +13,109 @@
         </div>
     }
 
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    </p>
 
-        <p>
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
-        </p>
-
-
-
+    <!-- Search Form -->
     <div class="row mb-3">
         <div class="col-md-12">
-            <form asp-action="Search" method="get" class="form-inline">
+            @using (Html.BeginForm("Search", "Product", FormMethod.Get, new { @class = "form-inline" }))
+            {
                 <div class="input-group">
-                    <input type="text" name="searchTerm" class="form-control" placeholder="Search products..."
-                           value="">
+                    <input type="text" name="searchTerm" class="form-control" placeholder="Search products..." value="" />
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">Search</button>
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
 
+    <!-- Filter Form -->
     <div class="row mb-4">
         <div class="col-md-12">
-            <form asp-action="Filter" method="get" class="form-inline">
+            @using (Html.BeginForm("Filter", "Product", FormMethod.Get, new { @class = "form-inline" }))
+            {
                 <div class="row">
-                    <div class="col-md-4">
-                        <select name="categoryId" class="form-control" asp-items="">
-                            <option value="">-- Select Category --</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="brandId" class="form-control" asp-items="">
-                            <option value="">-- Select Brand --</option>
-                        </select>
-                    </div>
+                    @*<div class="col-md-4">
+                        @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "Id", "Name"), "-- Select Category --", new { @class = "form-control" })
+                    </div>*@
+                    @*<div class="col-md-4">
+                        @Html.DropDownList("brandId", new SelectList(ViewBag.Brands, "Id", "Name"), "-- Select Brand --", new { @class = "form-control" })
+                    </div>*@
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Filter</button>
-                        <a asp-action="Index" class="btn btn-secondary">Reset</a>
+                        @Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-secondary" })
                     </div>
                 </div>
-            </form>
+            }
         </div>
     </div>
 
+    <!-- Product Cards -->
     <div class="row">
-    
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                 
-                        <img src="!.First().ImagePath"
-                             class="card-img-top " alt="" style="height: 200px; object-fit:contain ;">
-                    
-                    else
-                    {
-                        <div class="card-img-top bg-light"
-                             style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <span class="text-muted">No image available</span>
-                        </div>
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <p class="card-text">
-                            <strong>Price:</strong>  <br>
-                            <strong>Category:</strong> <br>
-                            <strong>Brand:</strong>
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="btn-group">
-                            <a asp-action="Details" asp-route-id="" class="btn btn-info">Details</a>
-                         
-                                <p>
-                                    <a asp-action="Edit" asp-route-id="" class="btn btn-warning">Edit</a>
-                                    <a asp-action="Delete" asp-route-id="" class="btn btn-danger">Delete</a>
-                                </p>
-                            
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
 
+                        @*@if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: contain;" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                                <span class="text-muted">No image available</span>
+                            </div>
+                        }*@
+
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">
+                                <strong>Price:</strong> @item.Price <br />
+                                <strong>Category:</strong>  <br />
+                                <strong>Brand:</strong> 
+                            </p>
                         </div>
+
+                        <div class="card-footer">
+                            <div class="btn-group">
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="alert alert-info">No products found.</div>
             </div>
-        
+        }
     </div>
+
+    <!-- Pagination Placeholder -->
     <div class="row">
         <div class="col-md-12 text-center">
-            <!-- Add pagination controls here -->
             <div class="pagination">
-                @*@if (Model.PagedProducts != null && Model.PagedProducts.TotalPages > 1)
-                {
-                    for (int i = 1; i <= Model.PagedProducts.TotalPages; i++)
+                @* Uncomment and implement pagination logic if needed
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
                     {
-                        <a asp-action="Index" asp-route-page="@i" class="btn btn-outline-secondary">@i</a>
+                        @Html.ActionLink(i.ToString(), "Index", new { page = i }, new { @class = "btn btn-outline-secondary" })
                     }
-                }*@
+                *@
             </div>
         </div>
     </div>
-
 </div>
+
+<!-- JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

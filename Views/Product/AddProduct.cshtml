@@ -1,0 +1,99 @@
+﻿@model TaskUIS.Models.Product
+
+@{
+    ViewBag.Title = "Add Product";
+}
+
+<h2>Add Product</h2>
+
+<div class="container">
+    <h1>Create Product</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form id="productForm">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" id="Name" name="Name" class="form-control" />
+                    <span class="text-danger" id="Name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Price">Price</label>
+                    <input type="text" id="Price" name="Price" class="form-control" />
+                    <span class="text-danger" id="Price-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="ProductCode">Product Code</label>
+                    <input type="text" id="ProductCode" name="ProductCode" class="form-control" />
+                    <span class="text-danger" id="ProductCode-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Unit">Unit</label>
+                    <input type="text" id="Unit" name="Unit" class="form-control" />
+                    <span class="text-danger" id="Unit-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="InitialQuantity">Initial Quantity</label>
+                    <input type="text" id="InitialQuantity" name="InitialQuantity" class="form-control" />
+                    <span class="text-danger" id="InitialQuantity-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="CurrentQuantity">Current Quantity</label>
+                    <input type="text" id="CurrentQuantity" name="CurrentQuantity" class="form-control" />
+                    <span class="text-danger" id="CurrentQuantity-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Create</button>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Back to List</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+    $('#productForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const data = {
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+            Name: $('#Name').val(),
+            Price: $('#Price').val(),
+            ProductCode: $('#ProductCode').val(),
+            Unit: $('#Unit').val(),
+            InitialQuantity: $('#InitialQuantity').val(),
+            CurrentQuantity: $('#CurrentQuantity').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddProduct", "Product")',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    $('#productForm')[0].reset();
+                } else {
+                    $('#validationSummary').text(response.message || 'Validation failed.');
+                }
+            },
+            error: function () {
+                alert('Error while creating product.');
+            }
+        });
+    });
+    </script>
+}

@@ -24,6 +24,7 @@ namespace TaskUIS.Models
         [Range(0, int.MaxValue)]
         public int InitialQuantity {  get; set; }
         public decimal CurrentQuantity { get; set; }
+       
 
     }
 }
