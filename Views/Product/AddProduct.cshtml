@@ -85,7 +85,7 @@
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
-                    $('#productForm')[0].reset();
+                  window.location.href = '@Url.Action("Index", "Product")';
                 } else {
                     $('#validationSummary').text(response.message || 'Validation failed.');
                 }
