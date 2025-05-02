@@ -166,14 +166,25 @@
     <Compile Include="Migrations\202504302120226_addProductCode.Designer.cs">
       <DependentUpon>202504302120226_addProductCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505022258085_fix.cs" />
+    <Compile Include="Migrations\202505022258085_fix.Designer.cs">
+      <DependentUpon>202505022258085_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505022304371_fix models.cs" />
+    <Compile Include="Migrations\202505022304371_fix models.Designer.cs">
+      <DependentUpon>202505022304371_fix models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\TransactionRepository.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\TransactionService.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\TransactionProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -229,6 +240,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Transaction\CreateTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202504302003006_UpdateProductAndTransactionModels.resx">
@@ -239,6 +251,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202504302120226_addProductCode.resx">
       <DependentUpon>202504302120226_addProductCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505022258085_fix.resx">
+      <DependentUpon>202505022258085_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505022304371_fix models.resx">
+      <DependentUpon>202505022304371_fix models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -268,9 +286,7 @@
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Transaction\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

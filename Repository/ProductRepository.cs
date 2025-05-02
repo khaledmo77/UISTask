@@ -84,6 +84,15 @@ namespace TaskUIS.Repository
             }
             return product;
         }
+        public async Task<decimal> Getproductprice(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"Product with ID {productId} not found.");
+            }
+            return product.Price;
+        }
 
 
     }

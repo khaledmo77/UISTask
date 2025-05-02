@@ -48,5 +48,9 @@ namespace TaskUIS.Repository
             }
             return transaction;
         }
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync()
+        {
+            return await _context.Transactions.ToListAsync();
+        }
     }
 }

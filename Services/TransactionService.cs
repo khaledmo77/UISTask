@@ -6,6 +6,7 @@ using TaskUIS.Contract;
 using TaskUIS.Models;
 using TaskUIS.Repository;
 using System.Threading.Tasks;
+using TaskUIS.ViewModels;
 namespace TaskUIS.Services
 {
 	public class TransactionService : ITransactionService
@@ -15,14 +16,29 @@ namespace TaskUIS.Services
         {
             _ItransactionRepository = ItransactionRepository;
         }
-        public async Task AddTransactionAsync(Transaction transaction)
+        public async Task AddTransactionAsync(TransactionProductViewModel model)
         {
-            if (transaction == null)
+            if (model == null)
             {
-                throw new ArgumentNullException(nameof(transaction));
+                throw new ArgumentNullException(nameof(model));
             }
-            await _ItransactionRepository.AddTransactionAsync(transaction);
 
+            var transaction = new Transaction
+            {
+                Date = DateTime.Now,
+                TotalPrice = model.Products.Sum(p => p.Quantity * p.UnitPrice),
+                TransactionDetails = model.Products
+                    .Where(p => p.Quantity > 0)
+                    .Select(p => new TransactionDetail
+                    {
+                        ProductId = p.ProductId,
+                        Quantity = p.Quantity,
+                        UnitPrice = p.UnitPrice,
+                        Total = p.Quantity * p.UnitPrice
+                    }).ToList()
+            };
+
+            await _ItransactionRepository.AddTransactionAsync(transaction);
         }
         public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync(DateTime? StartTime, DateTime? EndTime)
         {
@@ -36,6 +52,10 @@ namespace TaskUIS.Services
                 throw new KeyNotFoundException($"Transaction with ID {transactionId} not found.");
             }
             return transaction;
+        }
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync()
+        {
+            return await _ItransactionRepository.GetAllTransactionsAsync();
         }
 
     }

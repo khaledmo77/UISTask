@@ -94,3 +94,5 @@ D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.xml
 D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.xml
 D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Common.WebHost.xml
 D:\Task UIS\TaskUIS\TaskUIS\bin\Ninject.Web.Mvc.xml
+D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.fix.resources
+D:\Task UIS\TaskUIS\TaskUIS\obj\Debug\TaskUIS.Migrations.fixmodels.resources

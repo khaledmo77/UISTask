@@ -16,7 +16,9 @@
     <p>
         @Html.ActionLink("Create New", "AddProduct", null, new { @class = "btn btn-primary" })
     </p>
-
+    <p>
+        @Html.ActionLink("Create New Transaction", "AddProduct", null, new { @class = "btn btn-primary" })
+    </p>
     <!-- Search Form -->
     <div class="row mb-3">
         <div class="col-md-12">
@@ -65,7 +67,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" })*@
                                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
                                 <button class="btn btn-danger delete-btn" data-product-id="@item.Id" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                             </div>
@@ -82,11 +84,11 @@
         }
     </div>
 
-    <!-- Pagination Placeholder -->
+    <!-- Pagination  -->
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="pagination">
-                @* Pagination logic can be added here if needed *@
+
             </div>
         </div>
     </div>
@@ -111,13 +113,11 @@
     </div>
 </div>
 
-<!-- Hidden Input for Product ID -->
 <form id="deleteForm" asp-action="Delete" asp-controller="Product" method="post">
     <input type="hidden" id="deleteUserId" name="id" />
     @Html.AntiForgeryToken()
 </form>
 
-<!-- JS Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -125,7 +125,7 @@
         let deleteButtons = document.querySelectorAll(".delete-btn");
         let deleteUserIdInput = document.getElementById("deleteUserId");
 
-        // Set product ID when delete button is clicked
+       
         deleteButtons.forEach(button => {
             button.addEventListener("click", function () {
                 let productId = this.getAttribute("data-product-id");
@@ -133,13 +133,11 @@
             });
         });
 
-        // Handle the deletion when confirm button is clicked
         document.getElementById("confirmDelete").addEventListener("click", function () {
             let productId = deleteUserIdInput.value;
 
-            // AJAX request to delete the product
             $.ajax({
-                url: '@Url.Action("Delete", "Product")', // Adjust the URL to your action
+                url: '@Url.Action("Delete", "Product")', 
                 type: 'POST',
                 data: {
                     id: productId,
@@ -147,10 +145,10 @@
                 },
                 success: function (response) {
                     if (response.success) {
-                        // Close modal and reload page
+                  
                         $('#deleteModal').modal('hide');
                         alert(response.message || "Product deleted successfully.");
-                        location.reload(); // Or redirect to the product index page
+                        location.reload(); 
                     } else {
                         alert(response.message || "Failed to delete the product.");
                     }
