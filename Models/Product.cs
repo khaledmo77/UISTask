@@ -11,7 +11,7 @@ namespace TaskUIS.Models
 		public int Id { get; set; }
         [Required, StringLength(20)]
         public string ProductCode { get; set; }
-        [Required]
+          [Required(ErrorMessage = "Name is required")]
         [StringLength(100)]
         public string Name { get; set; }
         [Required]

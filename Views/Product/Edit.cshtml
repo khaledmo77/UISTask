@@ -1,0 +1,97 @@
+﻿@model TaskUIS.Models.Product
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+<h2>Edit Product</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form id="editProductForm">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" />
+                    <span class="text-danger" id="Name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Price">Price</label>
+                    <input type="text" id="Price" name="Price" value="@Model.Price" class="form-control" />
+                    <span class="text-danger" id="Price-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="ProductCode">Product Code</label>
+                    <input type="text" id="ProductCode" name="ProductCode" value="@Model.ProductCode" class="form-control" disabled />
+                    <span class="text-danger" id="ProductCode-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Unit">Unit</label>
+                    <input type="text" id="Unit" name="Unit" value="@Model.Unit" class="form-control" />
+                    <span class="text-danger" id="Unit-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="InitialQuantity">Initial Quantity</label>
+                    <input type="text" id="InitialQuantity" name="InitialQuantity" value="@Model.InitialQuantity" class="form-control" />
+                    <span class="text-danger" id="InitialQuantity-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="CurrentQuantity">Current Quantity</label>
+                    <input type="text" id="CurrentQuantity" name="CurrentQuantity" value="@Model.CurrentQuantity" class="form-control" />
+                    <span class="text-danger" id="CurrentQuantity-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#editProductForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const data = {
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                Id: $('input[name="Id"]').val(),
+                Name: $('#Name').val(),
+                Price: $('#Price').val(),
+                ProductCode: $('#ProductCode').val(),
+                Unit: $('#Unit').val(),
+                InitialQuantity: $('#InitialQuantity').val(),
+                CurrentQuantity: $('#CurrentQuantity').val()
+            };
+$.ajax({
+    url: '@Url.Action("Edit", "Product")',
+    type: 'POST',
+    data: data,
+    success: function (response) {
+        if (response.success) {
+            alert(response.message);
+            window.location.href = '@Url.Action("Index", "Product")';
+        } else {
+            alert(response.message || "Update failed.");
+        }
+    },
+    error: function (xhr, status, error) {
+        alert("An error occurred: " + xhr.responseText);
+    }
+});
+
+        });
+    </script>
+}

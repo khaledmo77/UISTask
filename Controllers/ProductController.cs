@@ -42,10 +42,22 @@ namespace TaskUIS.Controllers
             return Json(new { success = true, message = "Product created successfully", redirectUrl = Url.Action("Index", "Product") });
         }
         [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int id, bool isJson = false)
         {
             var product = await _productService.GetProductByIdAsync(id);
-            return Json(product, JsonRequestBehavior.AllowGet);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (isJson)
+            {
+                return Json(product, JsonRequestBehavior.AllowGet);
+            }
+
+            // Reuse the AddProduct view, passing the product as the model
+            return View(product);
         }
         [HttpPost]
         public async Task<ActionResult> Edit(Product model)
