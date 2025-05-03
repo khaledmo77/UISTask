@@ -98,36 +98,56 @@ Fetches details of a transaction by its ID.
 
 UISTask
 │
-├── Controllers
+├── Controller
+
 │ ├── TransactionController.cs
+
 │ └── HomeController.cs
+
 │
 ├── Models
+
 │ ├── Transaction.cs
+
 │ └── Product.cs
+
 │
 ├── ViewModels
+
 │ ├── TransactionOverviewViewModel.cs
+
 │ └── TransactionItemViewModel.cs
+
 │
 ├── Views
+
 │ ├── Transaction
+
 │ │ ├── Index.cshtml
+
 │ │ └── _TransactionTableBody.cshtml
+
 │ ├── Home
+
 │ │ └── Index.cshtml
+
 │
 ├── wwwroot
+
 │ ├── css
+
 │ └── js
+
 │
 ├── appsettings.json
+
 ├── Startup.cs
+
 └── Program.cs
 
-markdown
-Copy
-Edit
+
+
+
 
 ## Contributing
 
