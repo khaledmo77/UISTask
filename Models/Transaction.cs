@@ -16,4 +16,7 @@ public class Transaction
 
     // Navigation property for details
     public virtual ICollection<TransactionDetail> TransactionDetails { get; set; }
+
+    public ICollection<TransactionProduct> TransactionProducts { get; set; }
+    public virtual ICollection<Product> Products { get; set; }
 }

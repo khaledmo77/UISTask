@@ -21,16 +21,37 @@ namespace TaskUIS.Controllers
             _IProductService = iProductService;
         }
         // GET: Transaction
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(DateTime? startDate)
         {
-            var transactions = await _ITransactionService.GetAllTransactionsAsync();
-            return View(transactions);
+            var transactions = startDate.HasValue
+                ? await _ITransactionService.GetAllTransactionsByDateAsync(startDate.Value)
+                : await _ITransactionService.GetAllTransactionsAsync();
+            var model = new TransactionOverviewViewModel
+            {
+                FilterDate = startDate ?? DateTime.Today, 
+                Transactions = transactions.Select(t => new TransactionItemViewModel
+                {
+                    Id = t.Id,
+                    ProductName = t.TransactionDetails.FirstOrDefault()?.Product.Name, 
+                    Quantity = t.TransactionDetails.Sum(d => d.Quantity),
+                    UnitPrice = t.TransactionDetails.Sum(d => d.UnitPrice), 
+                    TotalPrice = t.TransactionDetails.Sum(d => d.Total), 
+                    Date = t.Date
+                }).ToList()
+            };
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_TransactionTableBody", model.Transactions);
+            }
+            return View(model);
         }
-        //filter
+
+
+
         [HttpGet]
         public async Task<ActionResult> GetAllTransactions(DateTime? startDate, DateTime? endDate)
         {
-            var transactions = await _ITransactionService.GetAllTransactionsAsync(startDate, endDate);
+            var transactions = await _ITransactionService.GetAllTransactionsByDateAsync(startDate);
             return Json(transactions, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
@@ -76,5 +97,40 @@ namespace TaskUIS.Controllers
             }
             return Json(new { success = true, price = product.Price }, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public async Task<ActionResult> GetTransactionById(int transactionId)
+        {
+            var transaction = await _ITransactionService.GetTransactionByIdAsync(transactionId);
+
+            if (transaction == null)
+            {
+                return Json(new { success = false, message = "Transaction not found" }, JsonRequestBehavior.AllowGet);
+            }
+
+            // Get details (with Product info)
+            var transactionDetails = await _ITransactionService.GetTransactionDetailsAsync(transactionId);
+
+            var productViewModels = transactionDetails.Select(td => new ProductViewModel
+            {
+                ProductId = td.ProductId,
+                Name = td.Product.Name,
+                UnitPrice = td.UnitPrice,
+                Quantity = td.Quantity
+            }).ToList();
+            var totalQuantity = transactionDetails.Sum(td => td.Quantity);
+
+            var viewModel = new TransactionDetailViewModel
+            {
+                TransactionId = transaction.Id,
+                TotalPrice = transaction.TotalPrice,
+                Quantity = totalQuantity, // assuming Quantity is stored on Transaction model
+                Date = transaction.Date,
+                Products = productViewModels
+            };
+
+            return Json(new { success = true, transaction = viewModel }, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

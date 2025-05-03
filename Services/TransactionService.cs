@@ -40,9 +40,17 @@ namespace TaskUIS.Services
 
             await _ItransactionRepository.AddTransactionAsync(transaction);
         }
-        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync(DateTime? StartTime, DateTime? EndTime)
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync()
         {
-            return await _ItransactionRepository.GetAllTransactionsAsync(StartTime, EndTime);
+            return await _ItransactionRepository.GetAllTransactionsAsync();
+        }
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsByDateAsync(DateTime? startdate)
+        {
+            if (startdate == null)
+            {
+                throw new ArgumentNullException(nameof(startdate));
+            }
+            return await _ItransactionRepository.GetAllTransactionsByDateAsync(startdate);
         }
         public async Task<Transaction> GetTransactionByIdAsync(int transactionId)
         {
@@ -53,9 +61,15 @@ namespace TaskUIS.Services
             }
             return transaction;
         }
-        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync()
+
+        public async Task<List<TransactionDetail>> GetTransactionDetailsAsync(int transactionId)
         {
-            return await _ItransactionRepository.GetAllTransactionsAsync();
+            var transaction = await _ItransactionRepository.GetTransactionDetailsAsync(transactionId);
+            if (transaction == null)
+            {
+                throw new KeyNotFoundException($"Transaction with ID {transactionId} not found.");
+            }
+            return transaction;
         }
 
     }

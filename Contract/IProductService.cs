@@ -16,6 +16,7 @@ namespace TaskUIS.Contract
         Task<Product> GetProductByIdAsync(int productId);
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<decimal> Getproductprice(int productId);
+     
 
     }
 }

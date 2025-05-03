@@ -24,7 +24,9 @@ namespace TaskUIS.Models
         [Range(0, int.MaxValue)]
         public int InitialQuantity {  get; set; }
         public decimal CurrentQuantity { get; set; }
-       
+
+        public ICollection<TransactionProduct> TransactionProducts { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
 }

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<TaskUIS.ViewModels.TransactionItemViewModel>
+
+@foreach (var transaction in Model)
+{
+    <tr>
+        <td>@transaction.ProductName</td>
+        <td>@transaction.Quantity</td>
+        <td>@transaction.UnitPrice.ToString("C2")</td>
+        <td>@transaction.TotalPrice.ToString("C2")</td>
+        <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+        <td>
+            <button class="btn btn-info btn-sm view-details" data-id="@transaction.Id">View Details</button>
+        </td>
+    </tr>
+}

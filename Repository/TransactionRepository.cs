@@ -26,19 +26,17 @@ namespace TaskUIS.Repository
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
         }
-       public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync(DateTime? StartTime, DateTime? EndTime)
+        public async Task<IEnumerable<Transaction>> GetAllTransactionsByDateAsync(DateTime? startdate)
         {
-            var transactions = _context.Transactions.AsQueryable();
-            if (StartTime.HasValue)
+            if (startdate == null)
             {
-                transactions = transactions.Where(t => t.Date >= StartTime.Value);
+                throw new ArgumentNullException(nameof(startdate));
             }
-            if (EndTime.HasValue)
-            {
-                transactions = transactions.Where(t => t.Date <= EndTime.Value);
-            }
-            return await transactions.ToListAsync();
+            return await _context.Transactions
+                .Where(t => DbFunctions.TruncateTime(t.Date) == DbFunctions.TruncateTime(startdate))
+                .ToListAsync();
         }
+    
        public async Task<Transaction> GetTransactionByIdAsync(int transactionId)
         {
             var transaction = await _context.Transactions.FindAsync(transactionId);
@@ -52,5 +50,21 @@ namespace TaskUIS.Repository
         {
             return await _context.Transactions.ToListAsync();
         }
+        public async Task<List<TransactionDetail>> GetTransactionDetailsAsync(int transactionId)
+
+        {
+            var transaction = await _context.Transactions
+                   .Include(t => t.TransactionDetails)
+                    .Include(t => t.Products)
+                .FirstOrDefaultAsync(t => t.Id == transactionId);
+
+            if (transaction == null)
+            {
+                throw new KeyNotFoundException($"Transaction with ID {transactionId} not found.");
+            }
+
+            return transaction.TransactionDetails.ToList();
+        }
+
     }
 }
