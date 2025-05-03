@@ -1,6 +1,6 @@
 # UISTask - Transaction Overview System
 
-UISTask is a web-based application that provides an interface to manage and display transaction data. It allows users to view a list of transactions, filter transactions by date, and view detailed information about each transaction.
+UISTask is a web-based application that provides an interface to manage and display transaction data. It allows users to view a list of transactions, filter transactions by date, and view detailed information about each transaction. The application follows a **Repository Service Pattern** architecture, ensuring clean separation of concerns between the data access layer and the service layer.
 
 ## Features
 
